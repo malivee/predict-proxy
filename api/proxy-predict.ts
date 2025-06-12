@@ -1,13 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  
-  res.setHeader("Access-Control-Allow-Origin", "*"); 
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   if (req.method === "OPTIONS") {
-    return res.status(200).end(); 
+    return res.status(200).end();
   }
 
   if (req.method !== "POST") {
@@ -17,12 +16,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const EC2_URL = process.env.EC2_URL;
 
   try {
+    const { input } = req.body;
+    
     const response = await fetch(`${EC2_URL}/predict`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(req.body)
+      body: JSON.stringify({ input })
     });
 
     const data = await response.json();
