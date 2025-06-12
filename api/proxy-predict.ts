@@ -23,7 +23,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ input: [[input.hour, input.kwh, input.cost]] })
+      body: JSON.stringify({ input: [[1.0, 1.2, 2.2]] })
     });
 
     const data = await response.json();
