@@ -17,13 +17,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const { input } = req.body;
-    
+
     const response = await fetch(`${EC2_URL}/predict`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ input })
+      body: JSON.stringify({ input: [[input.hour, input.kwh, input.cost]] })
     });
 
     const data = await response.json();
